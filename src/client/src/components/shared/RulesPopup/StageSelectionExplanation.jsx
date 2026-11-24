@@ -1,4 +1,4 @@
-const StageSelectionExplanation = () => {
+export default function StageSelectionExplanation() {
   return (
     <div>
       <div className="text-3xl">Etappe opstelling:</div>
@@ -9,7 +9,4 @@ const StageSelectionExplanation = () => {
       </div>
     </div>
   )
-
 }
-
-export default StageSelectionExplanation
