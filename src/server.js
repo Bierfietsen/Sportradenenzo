@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 } else {
   app.get('*', (_, res) => {
-    res.sendFile('./client/public/index.html', { root: __dirname });
+    res.sendFile('./client/index.html', { root: __dirname });
   });
 }
 

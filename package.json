@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "description": "Poulewebsite voor de beste poulegroep",
   "engines": {
-    "node": "16.x"
+    "node": "22.x"
   },
   "repository": {
     "url": "https://github.com/RensReus/Sportradenenzo"
@@ -32,10 +32,10 @@
     "start-dev": "echo \"This command has been deprecated. Use 'npm start'\" && concurrently \"npm run server-dev\" \"npm run client\"",
     "server": "node build/server.js",
     "server-dev": "nodemon --config \"nodemon.json\"/",
-    "client": "node start-client.js",
+    "client": "npm --prefix src/client run dev",
     "lint": "eslint .",
-    "build": "npm i --production && npx tsc && cd src/client/ && npm i --production && npm i --save @babel/runtime && npm run build && cd ../..  && node heroku-build.js",
-    "build-netlify": "npm i --production && npx -p typescript tsc && cd src/client/ && npm i --production && npm i --save @babel/runtime && npm run build && cd ../..  && node heroku-build.js"
+    "build": "npm i --production && npx tsc && cd src/client/ && npm ci --include=dev && npm run build && cd ../..  && node heroku-build.js",
+    "build-netlify": "npm i --production && npx -p typescript tsc && cd src/client/ && npm ci --include=dev && npm run build && cd ../..  && node heroku-build.js"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",

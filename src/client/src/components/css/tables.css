@@ -1,27 +1,35 @@
 /*Default table css, overruled by more specified table classes*/
-table {
+@layer base {
+  table {
+      width: 100%;
+      background: none;
+  }
+}
+
+@layer base {
+  tr {
     width: 100%;
-    background: none;
+  }
 }
 
-tr {
-  width: 100%;
+@layer base {
+  th{
+      background: #374151;
+      color: white
+  }
 }
 
-th{
-    background: #374151;
-    color: white
-}
-
-table > caption{
-    background: #1F2937;
-    color: white;
-    font-size: 1.5rem;
-    line-height: 1.75rem;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    text-align: center;
-    width: 100%
+@layer base {
+  table > caption{
+      background: #1F2937;
+      color: white;
+      font-size: 1.5rem;
+      line-height: 1.75rem;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      text-align: center;
+      width: 100%
+  }
 }
 
 th.sortable{
@@ -34,12 +42,14 @@ th.sortable{
     user-select: none;
 }
 
-th, td {
-    padding: 6px 5px 5px 5px; /* compensatie voor box shadow */
-    text-align: left;
-    font-size: 1rem;
-    min-width: 2rem; 
-    max-height: 2rem;
+@layer base {
+  th, td {
+      padding: 6px 5px 5px 5px; /* compensatie voor box shadow */
+      text-align: left;
+      font-size: 1rem;
+      min-width: 2rem; 
+      max-height: 2rem;
+  }
 }
 
 tr.bold > :first-child{

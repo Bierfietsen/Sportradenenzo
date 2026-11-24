@@ -50,8 +50,10 @@ input.inputfield{
     color: black;
 }
 
-select{
-    color: black;
+@layer base {
+  select{
+      color: black;
+  }
 }
 
 input.inprogress {

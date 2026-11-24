@@ -1,9 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-/*CSS RESET*/
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+/*
+  Element defaults live in the base layer so Tailwind utilities can still override them
+  (unlayered CSS always wins over utilities in Tailwind 4).
+*/
+@layer base {
+  /* Tailwind 2 defaults that Tailwind 4 changed */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* CSS reset */
+  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr,
+  acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong,
+  sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot,
+  thead, tr, th, td {
     margin: 0;
     padding: 0;
     border: 0;
@@ -14,60 +34,45 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font-family: inherit;
     vertical-align: baseline;
   }
-  
-  /* remember to define focus styles! */
-  
+
   :focus {
     outline: 0;
   }
-  
-  body {
-    line-height: 1;
-  }
-  
-  ol, ul {
+
+  ol,
+  ul {
     list-style: none;
   }
-  
-  /* tables still need 'cellspacing="0"' in the markup */
+
   table {
     border-collapse: separate;
     border-spacing: 0;
   }
-  
-  caption, th, td {
+
+  caption,
+  th,
+  td {
     text-align: left;
   }
-  
+
   body {
     margin: 0;
+    line-height: 1;
     font-family: arial;
     font-size: 1.4rem;
     text-decoration: none;
   }
-    
-  .content {
-    background-color: #EFF6FF; /*blue-50*/
-  }
+}
 
-  .content.dark {
-    background-color: #374151; /*gray-700*/
-    color: white;
-  }
+.content {
+  background-color: #eff6ff; /* blue-50 */
+}
 
-  div.pageContainer {
-    box-sizing: border-box;
-    min-height: 100vh;
-    overflow: auto;
-    max-width: 1280px;
-    margin: auto;
-    padding-top: 70px;
-  }
-  
-  img.loadingGif {
-    height: 20%;
-    margin-left: 0%;
-    margin-top: 5%;
-    margin-bottom: 0;
-    padding: 0;
-  }
+div.pageContainer {
+  box-sizing: border-box;
+  min-height: 100vh;
+  overflow: auto;
+  max-width: 1280px;
+  margin: auto;
+  padding-top: 70px;
+}
