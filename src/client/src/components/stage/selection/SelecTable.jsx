@@ -73,7 +73,7 @@ export default function SelecTable({ data, functions }) {
   return (
     <div className="selecTable w-full" style={{ position: 'relative' }}>
       <LoadingDiv loading={loading} />
-      <table className="table-standard blue rounded w-full">
+      <table className="table-standard blue rounded-sm w-full">
         <thead>
           <tr>
             <th></th>

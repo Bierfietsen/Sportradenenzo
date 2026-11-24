@@ -25,7 +25,7 @@ export default function RulesPopup({ page: initialPage, raceName }) {
       <div className={showModal ? 'modal display-block' : 'modal display-none'}>
         <div className={showModal ? 'modal-content w-full display-block' : 'modal display-none'}>
           <div className="flex">
-            <div className="flex-grow ml-4 space-x-4">
+            <div className="grow ml-4 space-x-4">
               {TABS.map((tab) => (
                 <button key={tab.page} className="button_standard blue" onClick={() => setPage(tab.page)}>
                   {tab.label}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router'
 import axios from 'axios'
 
@@ -11,9 +11,7 @@ import LogInSignUp from './components/LogInSignUp'
 import Home from './components/home'
 import Stage from './components/stage'
 import Teamselection from './components/teamselection'
-import Admin from './components/admin'
 import Statistics from './components/statistics'
-import Charts from './components/charts'
 import Rider from './components/rider'
 import Profile from './components/profile'
 import Fourofour from './components/fourofour'
@@ -25,6 +23,10 @@ import './components/css/buttons.css'
 import './components/css/fonts.css'
 import './components/css/menus.css'
 import './components/css/tables.css'
+
+// Heavy pages (CanvasJS, admin tooling) load on demand
+const Admin = lazy(() => import('./components/admin'))
+const Charts = lazy(() => import('./components/charts'))
 
 // Pages that are reachable without being logged in
 const PUBLIC_PATHS = ['/passwordrecovery/', '/verify/']
@@ -52,10 +54,6 @@ export default function App() {
     currentStageLink: sessionStorage.getItem('currentStageLink') ?? '/home',
   }))
 
-  // The interceptor lives for the lifetime of the app, so it reads the latest path through a ref
-  const pathRef = useRef(location.pathname)
-  pathRef.current = location.pathname
-
   const login = useCallback((token) => {
     setAuthToken(token)
     setAuth({ isLoggedIn: true, isAdmin: tokenIsAdmin(token), loading: false })
@@ -74,13 +72,13 @@ export default function App() {
           setAuth((prev) => (prev.isLoggedIn ? prev : { ...prev, isLoggedIn: true, isAdmin: tokenIsAdmin(token) })),
         onUnauthorized: () => {
           setAuth((prev) => ({ ...prev, isLoggedIn: false, isAdmin: false }))
-          if (pathRef.current !== '/') {
-            setRedirect(pathRef.current)
+          if (window.location.pathname !== '/') {
+            setRedirect(window.location.pathname)
             navigate('/', { replace: true })
           }
         },
         onNotFound: (message) => {
-          setRedirect(pathRef.current)
+          setRedirect(window.location.pathname)
           setNotFoundMessage(message)
           navigate('/404', { replace: true })
         },
@@ -129,34 +127,36 @@ export default function App() {
         <div className="content">
           <Navbar />
           <div className="pageContainer">
-            <Routes>
-              <Route path="/" element={<Navigate to={auth.isLoggedIn ? '/home' : '/login'} replace />} />
-              <Route
-                path="/login"
-                element={auth.isLoggedIn ? <Navigate to={redirect} replace /> : auth.loading ? null : <LogInSignUp />}
-              />
-              <Route path="/passwordrecovery/:token" element={<PasswordRecovery />} />
-              <Route path="/verify/:token" element={<EmailVerification />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/stage/:stagenumber" element={<Stage />} />
-              <Route path="/teamselection" element={<Teamselection />} />
-              <Route path="/statistics/:selection" element={<Statistics />} />
-              <Route path="/charts/:chartname" element={<Charts />} />
-              <Route path="/profile/id/:account_id" element={<Profile />} />
-              <Route path="/profile/:username" element={<Profile />} />
-              <Route path="/rider/:rider_id" element={<Rider />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route
-                path="/admin/:subpage"
-                element={
-                  <AdminRoute>
-                    <Admin />
-                  </AdminRoute>
-                }
-              />
-              <Route path="/404" element={<Fourofour message={notFoundMessage} />} />
-              <Route path="*" element={<Fourofour />} />
-            </Routes>
+            <Suspense fallback={null}>
+              <Routes>
+                <Route path="/" element={<Navigate to={auth.isLoggedIn ? '/home' : '/login'} replace />} />
+                <Route
+                  path="/login"
+                  element={auth.isLoggedIn ? <Navigate to={redirect} replace /> : auth.loading ? null : <LogInSignUp />}
+                />
+                <Route path="/passwordrecovery/:token" element={<PasswordRecovery />} />
+                <Route path="/verify/:token" element={<EmailVerification />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/stage/:stagenumber" element={<Stage />} />
+                <Route path="/teamselection" element={<Teamselection />} />
+                <Route path="/statistics/:selection" element={<Statistics />} />
+                <Route path="/charts/:chartname" element={<Charts />} />
+                <Route path="/profile/id/:account_id" element={<Profile />} />
+                <Route path="/profile/:username" element={<Profile />} />
+                <Route path="/rider/:rider_id" element={<Rider />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route
+                  path="/admin/:subpage"
+                  element={
+                    <AdminRoute>
+                      <Admin />
+                    </AdminRoute>
+                  }
+                />
+                <Route path="/404" element={<Fourofour message={notFoundMessage} />} />
+                <Route path="*" element={<Fourofour />} />
+              </Routes>
+            </Suspense>
           </div>
         </div>
       </RaceContext.Provider>

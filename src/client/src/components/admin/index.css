@@ -98,25 +98,3 @@ table.outputTable{
   }
 
   /* Loading data css */
-  .loadingData.true{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0; 
-    right: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(100,100,100,0.7);
-    text-align: center;
-    vertical-align: center;
-  }
-
-  .loadingData > img {
-    display: block;
-    margin: auto;
-    width: 100%;
-  }
-
-  .loadingData.false{
-    display: none;
-  }

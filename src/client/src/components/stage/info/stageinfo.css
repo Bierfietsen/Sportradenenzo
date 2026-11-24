@@ -27,7 +27,7 @@
   flex-direction: column;
   margin: auto;
   width: 24rem;
-};
+}
 
 @media only screen and (min-width: 768px){
   .stageinfo-container{

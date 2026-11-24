@@ -1,3 +1,5 @@
+import './LoadingDiv.css'
+
 // The `loading` class on the wrapper shows the spinner (see the loadingData styles)
 export default function LoadingDiv({ loading }) {
   return (
