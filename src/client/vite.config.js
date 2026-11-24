@@ -11,7 +11,8 @@ export default defineConfig({
     },
   },
   build: {
-    // heroku-build.js moves this folder to build/client/build for the express server
-    outDir: 'build',
+    // The express server (build/server.js) serves the client from build/client/build
+    outDir: '../../build/client/build',
+    emptyOutDir: true,
   },
 })

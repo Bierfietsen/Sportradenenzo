@@ -14,7 +14,7 @@ let configDB;
 if (fs.existsSync('./src/server/db/Mongo/link.js') || fs.existsSync('./build/server/db/Mongo/link.js')) {
   configDB = require('./server/db/Mongo/link.js');
 } else {
-  configDB = process.env.DATABASE_LINK; // Zo niet gebruik heroku env var
+  configDB = process.env.DATABASE_LINK; // Zo niet gebruik env var
 }
 const mongoose = require('mongoose');
 mongoose.connect(configDB, { ssl: true, useUnifiedTopology: true, useNewUrlParser: true }); // verbinden met sportradenenzo mongodb
